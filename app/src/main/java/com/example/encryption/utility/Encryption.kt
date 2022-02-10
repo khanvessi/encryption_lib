@@ -1,8 +1,7 @@
 package com.example.encryption.utility
 
-import android.util.Base64
-import android.util.Log
 import com.example.encryption.callbacks.CallBack
+import org.apache.commons.codec.binary.Base64
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.security.InvalidAlgorithmParameterException
@@ -22,13 +21,14 @@ object Encryption {
     private val aesEncryptionAlgorithm = "AES"
 
 
+
     fun encrypt(keySize: Int, plainText: String, chum: String,callBack:CallBack) {
         try {
             val charset: Charset = Charsets.UTF_8
             val plainTextbytes = plainText.toByteArray(charset)
             val keyBytes = getKeyBytes(keySize, chum)
             val iv = getKeyBytes(16, chum)
-            val result = Base64.encodeToString(encrypt(plainTextbytes, keyBytes!!, iv!!), Base64.NO_WRAP)
+            val result = Base64.encodeBase64String(encrypt(plainTextbytes, keyBytes!!, iv!!))
             callBack.callback(result);
 //            return Base64.encodeToString(encrypt(plainTextbytes, keyBytes!!, iv!!), Base64.NO_WRAP)
         } catch (e: Exception) {
@@ -39,7 +39,7 @@ object Encryption {
 
     fun decrypt(keySize: Int, chiperText: String, chum: String,callBack:CallBack) {
         try {
-            val plainTextbytes = Base64.decode(chiperText, Base64.NO_WRAP)
+            val plainTextbytes = Base64.decodeBase64(chiperText)
             val keyBytes = getKeyBytes(keySize, chum)
             val iv = getKeyBytes(16, chum)
             val result = String(decrypt(plainTextbytes, keyBytes!!, iv!!)!!)

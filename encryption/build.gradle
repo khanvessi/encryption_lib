@@ -16,7 +16,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
     }
+
+
+//    testOptions {
+//        unitTests.returnDefaultValues = true
+//    }
 
     buildTypes {
         release {
@@ -50,8 +56,7 @@ afterEvaluate {
         publications{
             release(MavenPublication){
                 from components.release
-
-                groupId = 'com.github.aqib.encryption'
+                groupId = 'com.github.khanvessi.encryption'
                 artifactId = 'aes-encryption'
                 version = '1.0'
             }
